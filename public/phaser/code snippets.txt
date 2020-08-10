@@ -2,7 +2,7 @@
 this.load.setBaseURL('http://labs.phaser.io');
 
 ``` html
-!doctype html>
+<!doctype html>
 <html>
 
 <head>
