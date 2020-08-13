@@ -60,10 +60,10 @@ var SmoothedHorionztalControl = new Phaser.Class({
 
 function preload ()
 {
-    this.load.tilemapTiledJSON('map', 'assets/tilemaps/maps/matter-platformer.json');
-    this.load.image('kenney_redux_64x64', 'assets/tilemaps/tiles/kenney_redux_64x64.png');
-    this.load.spritesheet('player', 'assets/sprites/dude-cropped.png', { frameWidth: 32, frameHeight: 42 });
-    this.load.image('box', 'assets/sprites/box-item-boxed.png');
+    this.load.tilemapTiledJSON('map', 'https://labs.phaser.io/assets/tilemaps/maps/matter-platformer.json');
+    this.load.image('kenney_redux_64x64', 'https://labs.phaser.io/assets/tilemaps/tiles/kenney_redux_64x64.png');
+    this.load.spritesheet('player', 'https://labs.phaser.io/assets/sprites/dude-cropped.png', { frameWidth: 32, frameHeight: 42 });
+    this.load.image('box', 'https://labs.phaser.io/assets/sprites/box-item-boxed.png');
 }
 
 function create ()
