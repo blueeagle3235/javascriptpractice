@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=<device-width>, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
     <script src="//cdn.jsdelivr.net/npm/phaser@3.16.2/dist/phaser.min.js"></script>
@@ -126,22 +126,26 @@
         }
 
         function update() {
+            //player.setAccelerationX(player.body.accelerationX*0.7);
+            //player.setVelocityX(player.body.velocityX*0.7);
+
             if (cursors.left.isDown) {
-                player.setVelocityX(-240);
+                player.setVelocityX(-270);
                
                 player.anims.play("left", true);
             } else if (cursors.right.isDown) {
-                player.setVelocityX(240);
-                
+                player.setVelocityX(270);
+                //player.setAccelerationX(-100);
                 player.anims.play("right", true);
             } else {
                 player.setVelocityX(0);
+//                player.setVelocityX(player.body.velocityX*0.7);
 
                 player.anims.play("turn");
             }
 
             if (cursors.up.isDown && player.body.touching.down) {
-                player.setVelocityY(-420);
+                player.setVelocityY(-440);
             }
         }
 
