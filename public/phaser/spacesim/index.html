@@ -43,42 +43,7 @@
     }
 };
 
-class MyScene extends Phaser.Scene {
 
-constructor (config)
-{
-    super(config);
-}
-
-preload ()
-{
-    this.load.spritesheet('fullscreen', 'assets/rsz_full.png', { frameWidth: 32, frameHeight: 32 });
-}
-
-create (data)
-{
-        //this.spritesheet=this.add.image(data.x,data.y,'fullscreen')
-
-        var button = this.add.image(800-16, 16, 'fullscreen', 0).setOrigin(1, 0).setInteractive();
-
-button.on('pointerup', function () {
-
-    if (this.scale.isFullscreen)
-    {
-        button.setFrame(0);
-
-        this.scale.stopFullscreen();
-    }
-    else
-    {
-        button.setFrame(1);
-        this.scale.startFullscreen();
-    }
-
-}, this);
-}
-
-}
 
 var bg;
 var stars;
@@ -94,11 +59,16 @@ var track2;
 var track3;
 var text;//test text
 var tracktime;
+var keyP;
+var keyE;
 //3 track vars until i figure out a better way ;-;
+var isPaused=true;
+var boost;
+var boostcooldown=0;
 
 var game = new Phaser.Game(config);
 
-game.scene.add('myScene', MyScene, true, { x: 760, y: 40 });
+
 
 
 function preload ()
@@ -232,6 +202,9 @@ function create ()
 
     var particles = this.add.particles('space');
 
+
+
+
     emitter = particles.createEmitter({
         frame: 'blue',
         speed: 90,
@@ -292,24 +265,7 @@ function create ()
         runChildUpdate: true
     });
 
-    var button = this.add.image(800-16, 16, 'fullscreen', 0).setOrigin(1, 0).setInteractive();
 
-button.on('pointerup', function () {
-
-    if (this.scale.isFullscreen)
-    {
-        button.setFrame(0);
-
-        this.scale.stopFullscreen();
-    }
-    else
-    {
-        button.setFrame(1);
-
-        this.scale.startFullscreen();
-    }
-
-}, this);
 
     
     ship = this.physics.add.image(4000, 3000, 'space', 'ship').setDepth(2);
@@ -319,22 +275,147 @@ button.on('pointerup', function () {
     ship.setAngularDrag(-0.00001);
     ship.setMaxVelocity(600);
 
+
     emitter.startFollow(ship);
     emitter2.startFollow(ship);
     
     track = this.sound.add("music");
-    track2 = this.sound.add("music2");
+    //track2 = this.sound.add("music2");
     track3 = this.sound.add("music3");
     
-    track2.stop();
-    track2.currentTime = 0;
-    track2.rate = 1;
-    this.keyP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P); //pausing mechanism work later
+    //track2.stop();
+    //track2.currentTime = 0;
+    //track2.rate = 1;
 
     //track2.detune = 200;
 
-    track2.loop = true;
-    track2.play();
+    //track2.loop = true;
+    //track2.play();
+
+    class MyScene extends Phaser.Scene {
+
+constructor (config)
+{
+    super(config);
+}
+preload ()
+{
+    this.load.spritesheet('fullscreen', 'assets/rsz_full.png', { frameWidth: 32, frameHeight: 32 });
+    this.load.spritesheet('pause', 'assets/pauseandplay.png', { frameWidth: 32, frameHeight: 32 });
+
+}
+
+create (data)
+{
+        //this.spritesheet=this.add.image(data.x,data.y,'fullscreen')
+        track2 = this.sound.add("music2");
+        track2.stop();
+        track2.currentTime = 0;
+        track2.rate = 1;
+        track2.loop = true;
+        track2.play();
+        track2.pause();
+        track2.pauseOnBlur=false;
+        keyP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.P); //pausing mechanism work later
+
+
+
+        var button = this.add.image(800-16, 16, 'fullscreen', 0).setOrigin(1, 0).setInteractive();
+        var button2 = this.add.image(740-16, 16, 'pause', 0).setOrigin(1, 0).setInteractive();
+
+        text = this.add.text(10, 10, '', {
+                font: '16px Courier',
+                fill: '#00ff00'
+            });
+            
+button.on('pointerup', function () {
+
+    if (this.scale.isFullscreen)
+    {
+        button.setFrame(0);
+        track2.pause();
+        this.scale.stopFullscreen();
+    }
+    else
+    {
+        button.setFrame(1);
+        track2.resume();
+
+        this.scale.startFullscreen();
+    }
+
+}, this);
+//isPaused=1;//default
+
+button2.on('pointerdown', function () {
+   
+   //1 equal assignment, 2 compare, 3 comparison with type,casesensitive
+    if (isPaused==true){
+        track2.resume();
+        button2.setFrame(1);
+        console.log('true1');
+    } 
+    else{
+        track2.pause();
+        console.log('true2');
+        button2.setFrame(0);
+    }
+    isPaused=!isPaused;
+    console.log(isPaused);
+    /*if (isPaused=0){
+    console.log('successful!');
+    track2.resume();
+    button2.setFrame(1);
+    isPaused=0;
+    }
+    else {
+        button2.setFrame(0);
+        isPaused=1;
+        track2.pause();
+        console.log('paused');
+    }*/
+
+
+}, this);
+
+}
+update(){
+    text.setText('Speed: ' + ship.body.speed);
+   
+    // this.input.keyboard.on('keydown-P', function () {
+    //     if (isPaused==0){
+    //                 track2.pause();
+    //                 isPaused=1;
+    //             }
+    //             else if (isPaused==1){
+    //                 track2.resume();
+    //                 isPaused=0;
+    //             }
+    // });
+
+    if (this.input.keyboard.checkDown(keyP, 750))
+    {
+        if (isPaused==0){
+                    track2.pause();
+                    isPaused=1;
+                }
+                else if (isPaused==1){
+                    track2.resume();
+                    isPaused=0;
+                }    }
+    // if (isPaused==0){
+    //                 track2.pause();
+    //                 isPaused=1;
+    //             }
+    //             else if (isPaused==1){
+    //                 track2.resume();
+    //                 isPaused=0;
+    //             }
+}
+}
+
+game.scene.add('myScene', MyScene, true, { x: 760, y: 40 });
+
     /*getRandomInt(0,3)
     if (getRandomInt(0,3)=1)
     {
@@ -364,6 +445,8 @@ button.on('pointerup', function () {
 
     cursors = this.input.keyboard.createCursorKeys();
     fire = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+
 
     this.add.sprite(4300, 3000).play('asteroid1-anim');
 
@@ -375,10 +458,6 @@ button.on('pointerup', function () {
         loop: -1
     });
 
-    text = this.add.text(10, 10, '', {
-                font: '16px Courier',
-                fill: '#00ff00'
-            });
 }
 
 function update (time, delta)
@@ -386,10 +465,6 @@ function update (time, delta)
     //var track2=
     //console.log(track2.currentTime); local var so cannot getvalue, try finding out later ;) i need this to work
     ship.setAcceleration(ship.body.acceleration * 0.7);
-    text.setText('Speed: ' + ship.body.speed);
-    if (this.keyP.isDown) {
-        //stuff here
-    }
     if (cursors.left.isDown)
     {
         ship.setAngularVelocity(-150);
@@ -434,9 +509,30 @@ function update (time, delta)
             lastFired = time + 70;
         }
     }
+    if (keyE.isDown && time > boostcooldown)
+    {
+        var i;
+        for (i=0;i<229;i++){
+            ship.setMaxVelocity(1200);
+            this.speed=1200;
+            this.physics.velocityFromRotation(ship.rotation, 32767, ship.body.acceleration);
+            
+        }
+            boostcooldown = time + 300;
+        ship.setMaxVelocity(600);
 
+    }
     bg.tilePositionX += ship.body.deltaX() * 0.5;
     bg.tilePositionY += ship.body.deltaY() * 0.5;
+
+    // this.input.keyboard.on('keydown-E', function (event)
+    // {   
+    //     var i;
+    //     for (i=0;i<229;i++){
+    //         ship.physics.velocityFromRotation(ship.rotation, 12000/i, ship.body.acceleration);
+            
+    //     }
+    // });
 
     stars.tilePositionX += ship.body.deltaX() * 2;
     stars.tilePositionY += ship.body.deltaY() * 2;
