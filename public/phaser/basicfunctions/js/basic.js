@@ -81,7 +81,7 @@ class scenegame extends Phaser.Scene{
         velocity=0;
         player = this.physics.add.sprite(100, 450, 'dude');
     
-        player.setBounce(0.225);
+        player.setBounce(.0225);
         player.setCollideWorldBounds(true);
     
         this.anims.create({
@@ -114,7 +114,7 @@ class scenegame extends Phaser.Scene{
         {
             //player.setVelocityX(-240);
             velocity=velocity-33;
-            velocity=velocity*0.98;
+            velocity=velocity*0.904;
             player.setVelocityX(velocity);
             player.anims.play('left', true);
         }
@@ -122,22 +122,22 @@ class scenegame extends Phaser.Scene{
         {
             //player.setVelocityX(240);
             velocity=velocity+33;
-            velocity=velocity*0.98;
+            velocity=velocity*0.91;
             player.setVelocityX(velocity);
             player.anims.play('right', true);
         }
         else
         {
             player.setVelocityX(velocity);
-            velocity=velocity*0.974;
+            velocity=velocity*0.89;
             player.anims.play('turn');
         }
-        if (velocity>266){
-            velocity=266;
-        }
-        else if (velocity<-266){
-            velocity=-266;
-        }
+        // if (velocity>266){
+        //     velocity=266;
+        // }
+        // else if (velocity<-266){
+        //     velocity=-266;
+        // }
         if (cursors.up.isDown && player.body.touching.down)
         {
             player.setVelocityY(-430);
@@ -165,7 +165,7 @@ var config = {
         default: 'arcade',
         arcade: {
             gravity: { y: 520 },
-            debug: false
+            debug: true
         }
     },
     scene:
