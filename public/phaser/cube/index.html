@@ -26,7 +26,8 @@ var player;
 var items;
 var fire;
 var lastFired=0;
-var bullet;
+var keyA;
+var keyD;
 var bullets;
 
 function preload(){
@@ -45,6 +46,10 @@ function create(){
     player.setCollideWorldBounds(true);
     cursors = this.input.keyboard.createCursorKeys();
     fire = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+    keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+
+
 
     items = this.physics.add.group({
                 key: "bomb",
@@ -139,24 +144,30 @@ function create(){
         maxSize: 40,
         runChildUpdate: true
     });
+    
 };
 function update(time,delta){
     player.setVelocityX(0);
     player.setVelocityY(0);
     player.setAcceleration(0);
     player.setAngularVelocity(0);
-
-    if (cursors.left.isDown){
-        player.setVelocityX(-100);
+    if (keyA.isDown){
         player.setAngularVelocity(-250);
+
     }
-    if (cursors.right.isDown){
-        player.setVelocityX(100);
+    if (keyD.isDown){
         player.setAngularVelocity(250);
 
     }
-    if (cursors.up.isDown){
+    if (cursors.left.isDown){
+        player.setVelocityX(-100);
+    }
+    if (cursors.right.isDown){
         player.setVelocityX(100);
+
+    }
+    if (cursors.up.isDown){
+        player.setVelocityY(-100);
     }
     if (cursors.down.isDown){
         player.setVelocityY(100);
@@ -172,6 +183,7 @@ function update(time,delta){
             lastFired = time + 70;
         }
     }
+    
 };
 
     </script>
