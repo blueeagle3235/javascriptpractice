@@ -1,0 +1,1 @@
+//this.load.image('funkcar','assets/star.png');

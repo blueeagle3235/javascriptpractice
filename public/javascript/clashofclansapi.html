@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+let searchtype = 'clans'+'/';
+let clantag = '99992RRP';
+let apikey= 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjRkZjA2NmM2LTI1ZTItNGUyNS1hNDYwLWIxMGY5Yzc0MTQ0YiIsImlhdCI6MTYxMTc3MTQzOCwic3ViIjoiZGV2ZWxvcGVyLzc0OWVlYmZhLTcyNDktMzIyYi1mYzM5LTcxNDJlZDQyMGIyMSIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjk5LjE5OS4xNTcuMTUwIl0sInR5cGUiOiJjbGllbnQifV19.r2OBxYs6GaFA_ZNOfUaIwTR_uaJV1jKUMLqzT7Nu3lV90pFoipUnngsLyF-r-jcmJz7yvCS4BfbJ1GLw6RmfyQ';
+//searching type
+let url = "https://api.clashofclans.com/v1/"+searchtype+'%23'+clantag;
+console.log(url);
+const axios = require('axios');
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
+axios(url,{
+  headers: {
+    'Accept': "application/json",
+    'Authorization': "Bearer "+apikey
+    }
+})
+ .then(function (response) {
+    console.log(response.data);   
+  })
+   .catch(function (error) {
+    console.log(error);
+  });
+
+    </script>
+</body>
+</html>

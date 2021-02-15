@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Api Testing</title>
+</head>
+<body>
+    <img src="https://upload.wikimedia.org/wikipedia/en/9/9a/Trollface_non-free.png" alt="A trollface">
+</p> bottom text <a>this text will be different perhaps</a></p>
+    <section></section>
+    <script>
+        const link = document.querySelector('a');
+        link.textContent=', but not quite. Infact there is more text after this bottom text here.';
+        
+        const sect = document.querySelector('section');
+        const para = document.createElement('p');
+        para.textContent = 'But wait, there is more bottom text. There might even be bottom text under this bottom text.';
+        sect.appendChild(para);
+        const text = document.createTextNode('Top text');
+        const linkPara = document.querySelector('p');
+        linkPara.appendChild(text);
+        para.style.color = 'white';
+para.style.backgroundColor = 'black';
+para.style.padding = '10px';
+para.style.width = '250px';
+para.style.textAlign = 'center';
+    </script>
+</body>
+</html>
